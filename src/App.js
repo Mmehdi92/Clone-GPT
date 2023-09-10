@@ -26,7 +26,7 @@ function App() {
             </button>
             <button className="query">
               <img src={msgIcon} alt="Qeury" />
-              How to suck at everything ?
+              How to ... ?
             </button>
           </div>
         </div>
