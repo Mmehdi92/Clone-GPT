@@ -84,23 +84,89 @@ body {
 
 .lowerSide {
   padding: 2.5rem;
- 
 }
 
-.listItems{
-    margin: 0.7rem;
-    display: flex;
-    align-items:center ;
-    font-size: 1.3rem;    
+.listItems {
+  margin: 0.7rem;
+  display: flex;
+  align-items: center;
+  font-size: 1.3rem;
 }
 
-.listItemImg{
-    margin: 1rem;
-    padding-right: 1rem;
+.listItemImg {
+  margin: 1rem;
+  padding-right: 1rem;
 }
-.listItems:nth-child(1)>.listItemImg{
-    margin-right: 0.55rem;
+.listItems:nth-child(1) > .listItemImg {
+  margin-right: 0.55rem;
 }
-.listItems:nth-child(3)>.listItemImg{
-    margin-right: 0.75rem;
+.listItems:nth-child(3) > .listItemImg {
+  margin-right: 0.75rem;
+}
+
+.main {
+  min-height: calc(100vh -14rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 6rem 10rem;
+}
+
+.chat {
+  margin: 1rem;
+  padding: 2rem;
+  font-size: 1.3rem;
+  display: flex;
+  align-items: flex-start;
+  text-align: justify;
+}
+.chatImg {
+  object-fit: cover;
+  width: 5rem;
+  margin-right: 2rem;
+  border-radius: 0.7rem;
+}
+.bot {
+  background: rgba(28, 30, 58, 1);
+  width: fit-content;
+  border-radius: 0.7rem;
+}
+.chats {
+  overflow: hidden;
+  overflow-y: scroll;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  width: 100%;
+  min-width: 70rem;
+  height: calc(100vh - 17rem);
+}
+
+.chatFooter {
+  margin-top: auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.inp {
+  padding: 0.5rem;
+  background-color: rgba(28, 30, 58, 1);
+  display: flex;
+  align-items: center;
+  border-radius: 2.5rem;
+  width: 68rem;
+}
+
+.inp > input {
+  width: calc(100% - 3rem);
+  outline: none;
+  padding: 1.5rem;
+  color: white;
+}
+
+.inp > input,
+.send {
+  background: transparent;
+  border: none;
 }
