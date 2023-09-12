@@ -8,8 +8,56 @@ import upgradeIcon from "./assets/rocket.svg";
 import sendIcon from "./assets/send.svg";
 import userIcon from "./assets/user-icon.png";
 import gptImgLogo from "./assets/chatgptLogo.svg";
+import { sendMsgToOpenAi } from "./openai";
+import { useState, useRef, useEffect } from "react";
 
 function App() {
+  const messagesEndRef = useRef(null);
+  const [input, setInput] = useState("");
+  const [messages, setMessages] = useState([
+    {
+      text: "Hello there! I am Buci GPT, your personal AI assistant. How can I help you today?",
+      isBot: true,
+    },
+  ]);
+
+  useEffect(() => {
+    messagesEndRef.current.scrollIntoView();
+  }, [messages]);
+
+  const handleSend = async () => {
+    const text = input;
+    setInput("");
+    setMessages([...messages, { text, isBot: false }]);
+    const res = await sendMsgToOpenAi(text);
+    setMessages(
+      ...messages,
+      { text: input, isBot: false },
+      { text: res, isBot: true }
+    );
+
+    console.log(res);
+  };
+
+  const handleEnterKey = async (e) => {
+    if (e.key === "Enter") await handleSend();
+  };
+
+  const handleQeury = async (e) => {
+    const text = e.target.value;
+    setInput("");
+    setMessages([...messages, { text, isBot: false }]);
+    const res = await sendMsgToOpenAi(text);
+    setMessages(
+      ...messages,
+      { text: input, isBot: false },
+      { text: res, isBot: true }
+    );
+
+    console.log(res);
+
+  }
+
   return (
     <div className="App">
       <div className="sideBar">
@@ -18,18 +66,18 @@ function App() {
             <img src={gptLogo} alt="Logo" className="logo" />
             <span className="brand">Buci GPt</span>
           </div>
-          <button className="midBtn">
+          <button className="midBtn" onClick={()=>{window.location.reload()}}>
             <img src={addBtn} alt="" className="addBtn" />
             New Chat
           </button>
           <div className="upperSideBottom">
-            <button className="query">
+            <button className="query" value={"What is programming ?"} onClick={handleQeury}>
               <img src={msgIcon} alt="Qeury" />
               What is programming ?
             </button>
-            <button className="query">
+            <button className="query" value={"Pizza or Macaroni ?"} onClick={handleQeury} >
               <img src={msgIcon} alt="Qeury" />
-              How to ... ?
+              Pizza or Macaroni ?
             </button>
           </div>
         </div>
@@ -49,23 +97,40 @@ function App() {
       </div>
       <div className="main">
         <div className="chats">
-          <div className="chat">
+          {/* <div className="chat">
             <img className="chatImg" src={userIcon} alt="" />
             <p className="text">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum nemo temporibus ratione deleniti eaque architecto illo sit itaque laboriosam quaerat. Labore eius quo rerum dolorum className="chatImg" 
+              Hello there! I am Buci GPT, your personal AI assistant. How can I
+              help you today?",
             </p>
-          </div>
-          <div className="chat bot">
-            <img className="chatImg" src={gptImgLogo} alt="" />
-            <p className="text">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Excepturi eveniet numquam dignissimos necessitatibus. Illo placeat quidem dolorem vitae est vero quaerat temporibus! Cumque nam, esse totam dolore fuga libero itaque dolores laborum minima modi, voluptate nisi molestiae eligendi sequi autem delectus deleniti sit aspernatur temporibus consectetur nemo facere necessitatibus. Perferendis quas iste dolore vitae repellendus soluta reiciendis similique in eum natus illum deleniti nemo maiores temporibus pariatur sit eaque aperiam beatae veritatis, eveniet itaque expedita facere saepe. Reprehenderit quibusdam optio commodi, numquam magni beatae ex iste ipsam quidem voluptates itaque inventore natus ipsum aliquam hic excepturi alias velit animi mollitia!
-            </p>
-          </div>
+          </div> */}
+
+          {messages.map((message, i) => {
+            return (
+              <div key={i} className={message.isBot ? "chat bot" : "chat"}>
+                <img
+                  className="chatImg"
+                  src={message.isBot ? gptImgLogo : userIcon}
+                  alt=""
+                />
+                <p className="text">{message.text}</p>
+              </div>
+            );
+          })}
+          <div ref={messagesEndRef} />
         </div>
         <div className="chatFooter">
           <div className="inp">
-            <input type="text" placeholder="Send A Message ..." />
-            <button className="send">
+            <input
+              type="text"
+              onKeyDown={handleEnterKey}
+              value={input}
+              onChange={(e) => {
+                setInput(e.target.value);
+              }}
+              placeholder="Send A Message ..."
+            />
+            <button className="send"  onClick={handleSend}>
               <img src={sendIcon} alt="Send" />
             </button>
           </div>

@@ -134,12 +134,13 @@ body {
 .chats {
   overflow: hidden;
   overflow-y: scroll;
-  overflow-y: hidden;
   scroll-behavior: smooth;
   width: 100%;
   min-width: 70rem;
   height: calc(100vh - 17rem);
 }
+
+::-webkit-scrollbar{display: none;}
 
 .chatFooter {
   margin-top: auto;
@@ -170,3 +171,21 @@ body {
   background: transparent;
   border: none;
 }
+
+
+
+@media screen and (min-width: 1600px) {
+  .midBtn {
+    background-color: #ff4b4b;
+    border: none;
+    padding: 1.5rem;
+    font-style: 1rem;
+    color: white;
+    width: 25rem;
+    justify-content: center;
+    margin-bottom: 3rem;
+    margin: 0 0 0 8rem;
+    border-radius: 0.5rem;
+  }
+}
+
